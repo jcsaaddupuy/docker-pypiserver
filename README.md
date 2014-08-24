@@ -44,6 +44,20 @@ to browse availables packages
 
 # Advanced usage
 
+The image starts with pypi-server as main entry point, configured to use the
+.htaccess (see Dockerfile for details). You can pass any pypi-server option when
+running the container.
+
+See [schmir/pypiserver](https://github.com/schmir/pypiserver) for all availables
+options.
+
+## Enable package overwriting
+
+Simply pass the _-o_ option :
+
+    docker run -p 8080:8080 -v /tmp/pypi/:/data jcsaaddupuy/pypiserver -o
+
+
 ## Use custom accounts
 First, generate a custom .htaccess file :
 
@@ -52,7 +66,7 @@ First, generate a custom .htaccess file :
 Then, start the container with the folder containing the config mounted as
 /home/pypiserver/config :
 
-    docker run -p 8080:8080 -v /tmp/pypi/:/data -v /path/to/config/:/home/pypiserver/config/ jcsaaddupuy/pypiserver
+    docker run -p 8080:8080 -v /tmp/pypi/:/data -v /path/to/config/:/config/ jcsaaddupuy/pypiserver
 
 ## Use with tox
 
