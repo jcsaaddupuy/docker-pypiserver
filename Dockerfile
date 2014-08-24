@@ -13,6 +13,7 @@ RUN apt-get install -qq -y python2.7 python-pip
 
 ## pypiserver installation
 RUN pip install pypiserver
+RUN pip install passlib
 ######
 
 
@@ -22,8 +23,9 @@ RUN useradd -d /home/pypiserver -m pypiserver
 
 
 RUN mkdir -p /data/packages
-
 RUN chown -R pypiserver /data/packages
+
+VOLUME ["/data/packages"]
 
 
 EXPOSE 8080
@@ -32,6 +34,9 @@ EXPOSE 8080
 ENV HOME /home/pypiserver
 USER pypiserver
 
+RUN mkdir -p /home/pypiserver/config/
+ADD htaccess /home/pypiserver/config/.htaccess
+
 WORKDIR /home/pypiserver
-CMD ["pypi-server" , "-p", "8080", "/data/packages"]
+CMD ["pypi-server" , "-p", "8080", "-P", "/home/pypiserver/config/.htaccess", "/data/packages"]
 
