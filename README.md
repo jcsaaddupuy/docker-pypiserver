@@ -4,17 +4,69 @@ docker-pypiserver
 pypiserver in a box
 
 
-Default config
-==============
-The provided htaccess file contains a basic user config :
+# Quick start
+
+## Launch the server
+
+    mkdir -p /tmp/pypi/packages
+    docker run -p 8080:8080 -v /tmp/pypi/:/data jcsaaddupuy/pypiserver
+
+## Default config
+
+The image comes with a default account :
 
 - login : admin
 - password : password
 
+## Configure setup tools
 
-Quick start
-===========
+In ~/.pypirc, add the following content :
+
+    [distutils]
+    index-servers =
+      internal
+
+      [internal]
+      repository: http://127.0.0.1:8080
+      username: admin
+      password: password
+
+## Upload  your first package
+
+```
+python setup.py sdist upload -r internal
+```
+
+You can now browse to [http://localhost:8080/simple](http://localhost:8080/simple)
+to browse availables packages
 
 
-Config
-======
+
+# Advanced usage
+
+## Use custom accounts
+First, generate a custom .htaccess file :
+
+    htpasswd -sc /path/to/config/.htpasswd account_name
+
+Then, start the container with the folder containing the config mounted as
+/home/pypiserver/config :
+
+    docker run -p 8080:8080 -v /tmp/pypi/:/data -v /path/to/config/:/home/pypiserver/config/ jcsaaddupuy/pypiserver
+
+## Use with tox
+
+in tox.ini, add your server in the __indexserver__ section :
+
+    [tox]
+    indexserver =
+        default = https://pypi.python.org/simple
+        DEV = http://127.0.0.1:8080/simple
+
+You can then use your own server pypi server to install dependancies, by
+prefixing the modulename with the alias given in indexserver (in our case, :DEV:) :
+
+    [testenv]
+    deps= :DEV:your_awesome_module
+
+
