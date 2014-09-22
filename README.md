@@ -61,7 +61,7 @@ Simply pass the _-o_ option :
 ## Use custom accounts
 First, generate a custom .htaccess file :
 
-    htpasswd -sc /path/to/config/.htpasswd account_name
+    htpasswd -sc /path/to/config/.htaccess account_name
 
 Then, start the container with the folder containing the config mounted as
 /home/pypiserver/config :
