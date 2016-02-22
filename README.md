@@ -4,12 +4,15 @@ docker-pypiserver
 pypiserver in a box
 
 
+*with additions from Fred Thiele <ferdy_news@gmx.de>*
+
+
 # Quick start
 
 ## Launch the server
 
     mkdir -p /tmp/pypi/packages
-    docker run -p 8080:8080 -v /tmp/pypi/:/data jcsaaddupuy/pypiserver
+    docker run -p 8080:8080 -v /tmp/pypi/packages:/data/packages f3rdy/pypiserver
 
 ## Default config
 
@@ -55,7 +58,7 @@ options.
 
 Simply pass the _-o_ option :
 
-    docker run -p 8080:8080 -v /tmp/pypi/:/data jcsaaddupuy/pypiserver -o
+    docker run -p 8080:8080 -v /tmp/pypi/packages:/data/packages f3rdy/pypiserver -o
 
 
 ## Use custom accounts
@@ -66,7 +69,7 @@ First, generate a custom .htaccess file :
 Then, start the container with the folder containing the config mounted as
 /home/pypiserver/config :
 
-    docker run -p 8080:8080 -v /tmp/pypi/:/data -v /path/to/config/:/config/ jcsaaddupuy/pypiserver
+    docker run -p 8080:8080 -v /tmp/pypi/packages:/data/packages -v /path/to/config:/config f3rdy/pypiserver
 
 ## Use with tox
 

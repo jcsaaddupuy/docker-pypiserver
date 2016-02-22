@@ -43,8 +43,7 @@ RUN mkdir -p /config
 RUN chown -R pypiserver /data/packages
 ##########################
 
-VOLUME ["/data/packages"]
-
+VOLUME ["/data/packages", "/config"]
 
 ##########################
 # exposes the default port
