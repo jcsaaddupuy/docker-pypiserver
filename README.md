@@ -12,7 +12,7 @@ pypiserver in a box
 ## Launch the server
 
     mkdir -p /tmp/pypi/packages
-    docker run -p 8080:8080 -v /tmp/pypi/packages:/data/packages f3rdy/pypiserver
+    docker run -p 8080:8080 -v /tmp/pypi/packages:/data/packages jcsaaddupuy/pypiserver
 
 ## Default config
 
@@ -58,7 +58,7 @@ options.
 
 Simply pass the _-o_ option :
 
-    docker run -p 8080:8080 -v /tmp/pypi/packages:/data/packages f3rdy/pypiserver -o
+    docker run -p 8080:8080 -v /tmp/pypi/packages:/data/packages jcsaaddupuy/pypiserver -o
 
 
 ## Use custom accounts
@@ -69,7 +69,7 @@ First, generate a custom .htaccess file :
 Then, start the container with the folder containing the config mounted as
 /home/pypiserver/config :
 
-    docker run -p 8080:8080 -v /tmp/pypi/packages:/data/packages -v /path/to/config:/config f3rdy/pypiserver
+    docker run -p 8080:8080 -v /tmp/pypi/packages:/data/packages -v /path/to/config:/config jcsaaddupuy/pypiserver
 
 ## Use with tox
 
